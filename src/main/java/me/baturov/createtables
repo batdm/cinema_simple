@@ -1,0 +1,25 @@
+create table cinema(
+c_id int primary key auto_increment,
+name varchar(100));
+
+create table hall(
+h_id int primary key auto_increment,
+c_id int,
+number_of_seats int,
+foreign key(c_id) references cinema(c_id));
+
+create table status(
+st_id int primary key auto_increment,
+status varchar(100));
+insert into status (status) values ('free'),('booked');
+
+create table seat(
+s_id int primary key auto_increment,
+c_id int,
+h_id int,
+row int,
+seat int,
+st_id int,
+foreign key(c_id) references cinema(c_id),
+foreign key(h_id) references hall(h_id),
+foreign key(st_id) references status(st_id));
