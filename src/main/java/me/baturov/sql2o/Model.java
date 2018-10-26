@@ -21,4 +21,6 @@ public interface Model {
     Seat getSeat(int cinema_id, int hall_id);
 
     Status getStatus(int st_id);
+
+    void createTrigger();
 }

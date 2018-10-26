@@ -76,4 +76,18 @@ public class Sql2oModel implements Model {
                     .executeAndFetchFirst(Status.class);
         }
     }
+
+    // По хорошему нужен триггер к таблице hall. При создании строки в hall чтобы создавались
+    // строки в seat, читай "создание мест". Например, создали зал на
+    // 50 мест и сразу же создались 50 мест с соотв-щим ID зала.
+    // Вот только я пока не разобрался с триггерами в h2. Морока какая-то.
+    @Override
+    public void createTrigger() {
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery("create trigger set_seats " +
+                                       "after insert on hall for each row " +
+                                       "call \"me.baturov.trigger_h2.SeatTrigger\" ").executeUpdate();
+            conn.commit();
+        }
+    }
 }
